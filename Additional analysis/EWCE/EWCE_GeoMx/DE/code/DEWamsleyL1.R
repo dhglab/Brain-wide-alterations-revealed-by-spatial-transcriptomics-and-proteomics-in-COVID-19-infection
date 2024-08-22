@@ -1,12 +1,7 @@
 
 setwd("./WamsleyASD")
 load("./SizeBiased_Level2_CellType/CellTypeData_ASDobect_anno_ctl.rda")
-load("./Teg46_rank_up_down.RData")
-load("./CST46_rank_up_down.RData")
-load("./PN46_rank_up_down.RData")
-load("./FrontalWM56_rank_up_down.RData")
-load("./FrontalGM56_rank_up_down.RData")
-load("./PCT46_rank_up_down.RData")
+load("./DE_EWCE_input.rda")
 
 set.seed(12211991)
 options(stringsAsFactors = F)
