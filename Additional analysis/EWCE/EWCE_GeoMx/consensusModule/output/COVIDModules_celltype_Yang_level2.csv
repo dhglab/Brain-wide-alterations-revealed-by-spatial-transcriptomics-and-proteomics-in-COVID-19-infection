@@ -1,0 +1,27 @@
+"","CellType","annotLevel","p","fold_change","sd_from_mean","MEcolors","FDR"
+"Oligodendrocyte","Oligodendrocyte",2,9e-05,1.20835862309764,3.96777515159598,"MEblue",0.00063
+"Astrocyte","Astrocyte",2,0.00104,1.18119324808312,3.33475659691314,"MEblue",0.00364
+"Microglia","Microglia",2,0,1.3513589103739,5.05614399532483,"MEblue",0
+"Endothelial","Endothelial",2,0.00073,1.2644523772648,3.43217761387802,"MEblue",0.00340666666666667
+"NRGN neuron","NRGN neuron",2,0,2.63796806585423,15.4170055842811,"MEdarkred",0
+"Astrocyte1","Astrocyte",2,0,1.75879286518462,8.01400507431027,"MEgreenyellow",0
+"Endothelial1","Endothelial",2,0.00256,1.40832134667609,3.02588129469676,"MEgreenyellow",0.01792
+"NRGN neuron1","NRGN neuron",2,0,1.7304974207481,8.26625732676462,"MEgrey60",0
+"Microglia1","Microglia",2,0.00023,1.84450335656114,4.41862274769642,"MElightgreen",0.00322
+"NRGN neuron2","NRGN neuron",2,1e-05,1.34489774820762,5.24279647262391,"MEmagenta",0.00014
+"L5/6 CC excitatory neuron","L5/6 CC excitatory neuron",2,0.00632,1.14824081010764,2.67971808291771,"MEmagenta",0.04424
+"Endothelial2","Endothelial",2,2e-05,2.05368734279316,4.70880770064681,"MEmidnightblue",0.00028
+"Microglia2","Microglia",2,0.00345,1.35588234690223,2.95395012445374,"MEpink",0.02415
+"Endothelial3","Endothelial",2,0.00085,1.46858155055479,3.49615167776441,"MEpink",0.0119
+"NRGN neuron3","NRGN neuron",2,0,1.60554387246726,9.16240932783313,"MEpurple",0
+"Oligodendrocyte1","Oligodendrocyte",2,6e-05,1.26191746375336,4.30798634192822,"MEred",0.00042
+"Astrocyte2","Astrocyte",2,0.00944,1.15754733094986,2.50254530202331,"MEred",0.0440533333333333
+"NRGN neuron4","NRGN neuron",2,0,1.31874190386684,6.97798021564414,"MEred",0
+"NRGN neuron5","NRGN neuron",2,0,2.19929541388396,11.6877101294521,"MEroyalblue",0
+"Microglia3","Microglia",2,5e-05,1.70854078954992,4.48228544381314,"MEtan",7e-04
+"L2/3 excitatory neuron","L2/3 excitatory neuron",2,0.0013,1.07982160456051,3.21462276380283,"MEturquoise",0.00364
+"NRGN neuron6","NRGN neuron",2,0,2.17159044483567,37.3722967352856,"MEturquoise",0
+"L4 excitatory neuron","L4 excitatory neuron",2,4e-05,1.10312017407238,4.23624404813595,"MEturquoise",0.000186666666666667
+"L5/6 CC excitatory neuron1","L5/6 CC excitatory neuron",2,0,1.17858000694975,6.76902653883755,"MEturquoise",0
+"L5/6 excitatory neuron","L5/6 excitatory neuron",2,0.00055,1.11132128849217,3.47930305870565,"MEturquoise",0.001925
+"Microglia4","Microglia",2,0,1.6615281297331,7.80086869929162,"MEyellow",0

@@ -1,0 +1,17 @@
+,CellType,annotLevel,p,fold_change,sd_from_mean,FDR,area,trend
+NRGN neuron,NRGN neuron,1,0,2.249740144,28.18414378,0,FrontalGM,down
+Excitatory neuron,Excitatory neuron,1,5.00E-05,1.163733441,4.182776586,2.00E-04,FrontalGM,down
+NRGN neuron2,NRGN neuron,1,0.00017,1.578287555,4.186600937,0.00136,FrontalWM,down
+Oligodendrocyte2,Oligodendrocyte,1,0.00341,1.457611317,3.049459851,0.01364,FrontalWM,down
+Endothelial2,Endothelial,1,0.20481,1.185784419,0.806879827,0.54616,FrontalWM,down
+Astrocyte2,Astrocyte,1,0.80215,0.866704616,-0.864312124,0.99674,FrontalWM,down
+Excitatory neuron2,Excitatory neuron,1,0.99674,0.711003843,-2.366628627,0.99674,FrontalWM,down
+OPC2,OPC,1,0.95181,0.78175675,-1.518151513,0.99674,FrontalWM,down
+Microglia2,Microglia,1,0.83331,0.813874559,-0.972255369,0.99674,FrontalWM,down
+Inhibitory neuron2,Inhibitory neuron,1,0.99467,0.716284694,-2.200156297,0.99674,FrontalWM,down
+Oligodendrocyte,Oligodendrocyte,1,1,0.747888277,-5.256528232,1,FrontalGM,down
+Astrocyte,Astrocyte,1,1,0.59099771,-8.307620725,1,FrontalGM,down
+OPC,OPC,1,1,0.733400918,-5.765695381,1,FrontalGM,down
+Microglia,Microglia,1,1,0.664016501,-5.422405438,1,FrontalGM,down
+Inhibitory neuron,Inhibitory neuron,1,0.95552,0.930893678,-1.666763342,1,FrontalGM,down
+Endothelial,Endothelial,1,0.8981,0.906678,-1.262710704,1,FrontalGM,down
