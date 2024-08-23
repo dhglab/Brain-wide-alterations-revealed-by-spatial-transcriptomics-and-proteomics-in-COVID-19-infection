@@ -103,8 +103,10 @@ save(NRGN_WamsleyL1_cell, file="NRGN_WamsleyL1_cell.Rdata")
 NRGN_celltype <- rbind(NRGN_WamsleyL1_cell, NRGN_WamsleyL2_cell, NRGN_Bakken_cell)
 write.csv(NRGN_celltype, file="NRGN_celltype.csv")
 
-#replace negative sd_from_mean with 0
-NRGN_celltype_2 <- read_csv("NRGN_celltype_2.csv")
+#replace negative sd_from_mean with 0 for plotting 
+NRGN_celltype_2 <- NRGN_celltype
+NRGN_celltype_2$sdfrommean <- replace(NRGN_celltype$sd_from_mean, NRGN_celltype$sd_from_mean < 0, 0) 
+
 NRGN_celltype_2_WamsleyL1 <- subset(NRGN_celltype_2, area %in% c("WamsleyL1"))
 NRGN_celltype_2_WamsleyL2 <- subset(NRGN_celltype_2, area %in% c("WamsleyL2"))
 NRGN_celltype_2_Bakken <- subset(NRGN_celltype_2, area %in% c("Bakken"))

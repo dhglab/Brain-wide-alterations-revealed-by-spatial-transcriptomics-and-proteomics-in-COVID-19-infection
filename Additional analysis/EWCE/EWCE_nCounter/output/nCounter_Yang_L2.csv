@@ -1,7 +1,0 @@
-,CellType,annotLevel,p,fold_change,sd_from_mean,Trend,FDR,abundance
-L2/3 excitatory neuron,L2/3 excitatory neuron,2,0.00449,1.269449586,3.025678324,down,0.015715,-3.025678324
-NRGN neuron,NRGN neuron,2,0,2.067718792,9.549226645,down,0,-9.549226645
-PV interneuron,PV interneuron,2,0.00355,1.312888799,3.154563202,down,0.015715,-3.154563202
-L5/6 CC excitatory neuron,L5/6 CC excitatory neuron,2,0.0019,1.316562142,3.358176945,down,0.0133,-3.358176945
-Oligodendrocyte,Oligodendrocyte,2,0,2.478556558,10.06561055,up,0,10.06561055
-Microglia,Microglia,2,0,2.973570914,10.19256671,up,0,10.19256671
