@@ -4,15 +4,16 @@ library(EWCE); library(ggplot2); library(cowplot); library(limma);
 library(readxl); library(biomaRt) ; library(tidyverse)
 library(readr)
 setwd("./nCounter/Bakken")
-res_FrontalP_vs_CMG218_for_EWCE <- read_csv("./nCounter/res_FrontalP_vs_CMG218_for_EWCE.csv")
+#Differential results of Frontallboe nCounter, res_FrontalP_vs_CMG218_for_EWCE 
 nCounter_up_R <- subset(res_FrontalP_vs_CMG218_for_EWCE, rank > 2)
 nCounter_down_R <- subset(res_FrontalP_vs_CMG218_for_EWCE, rank < -2)
+save(nCounter_down_R, nCounter_up_R, file = "Frontal_nCounterDE_rank.rda")
 
 avg_method="SizeBiased"
 
 marker_vec=ctd
 
-test_vec = nCounter_up_R$...1
+test_vec = nCounter_up_R$Gene
 level_vec=c(1,2)
 ops = expand.grid(marker_vec,test_vec,level_vec)
 markers= ctd
@@ -45,7 +46,7 @@ nCounter_up_p <- filter(nCounter_up, FDR<0.05)
 nCounter_up_p$abundance <- abs(nCounter_up_p$sd_from_mean)
 save (nCounter_up, nCounter_up_p, file="nCounter_up_celltype_BakkenleveL2.Rdata")
 #########################################################################
-test_vec = nCounter_down_R$...1
+test_vec = nCounter_down_R$Gene
 level_vec=c(1,2)
 ops = expand.grid(marker_vec,test_vec,level_vec)
 markers= ctd
@@ -82,3 +83,4 @@ nCounter_Bakken_L2 <- rbind(nCounter_down_p, nCounter_up_p)
 
 write.csv(nCounter_Bakken_L2, file="nCounter_Bakken_L2.csv")
 
+#The results will be input file for Figure 5A

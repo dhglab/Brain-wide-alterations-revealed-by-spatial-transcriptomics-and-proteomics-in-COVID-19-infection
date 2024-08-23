@@ -1,18 +1,17 @@
-load("/u/project/geschwind/tzhang/tzhang/Dementia/EWCE/AdditionalCelltypeEWCE_SC/Yang_COVID/SizeBiased_Level2_CellType_Ziffra/CellTypeData_Yang_anno_ctl.rda")
+load("./SizeBiased_Level2_CellType_Ziffra/CellTypeData_Yang_anno_ctl.rda")
 
 library(EWCE); library(ggplot2); library(cowplot); library(limma); 
 library(readxl); library(biomaRt) ; library(tidyverse)
 library(readr)
-setwd("/u/project/geschwind/tzhang/tzhang/Dementia/EWCE/COVID/nCounter /Yang")
-res_FrontalP_vs_CMG218_for_EWCE <- read_csv("/u/project/geschwind/tzhang/tzhang/Dementia/EWCE/COVID/nCounter /res_FrontalP_vs_CMG218_for_EWCE.csv")
-nCounter_up_R <- subset(res_FrontalP_vs_CMG218_for_EWCE, rank > 2)
-nCounter_down_R <- subset(res_FrontalP_vs_CMG218_for_EWCE, rank < -2)
+setwd("./Yang_COVID")
+
+#Load Frontal_nCounterDE_rank.rda
 
 avg_method="SizeBiased"
 
 marker_vec=ctd
 
-test_vec = nCounter_up_R$...1
+test_vec = nCounter_up_R$Gene
 level_vec=c(1,2)
 ops = expand.grid(marker_vec,test_vec,level_vec)
 markers= ctd
@@ -45,7 +44,7 @@ nCounter_up_p <- filter(nCounter_up, FDR<0.05)
 nCounter_up_p$abundance <- abs(nCounter_up_p$sd_from_mean)
 save (nCounter_up, nCounter_up_p, file="nCounter_up_celltype_YangleveL2.Rdata")
 #########################################################################
-test_vec = nCounter_down_R$...1
+test_vec = nCounter_down_R$Gene
 level_vec=c(1,2)
 ops = expand.grid(marker_vec,test_vec,level_vec)
 markers= ctd
@@ -82,3 +81,4 @@ nCounter_Yang_L2 <- rbind(nCounter_down_p, nCounter_up_p)
 
 write.csv(nCounter_Yang_L2, file="nCounter_Yang_L2.csv")
 
+#The results will be input file for Figure 5A

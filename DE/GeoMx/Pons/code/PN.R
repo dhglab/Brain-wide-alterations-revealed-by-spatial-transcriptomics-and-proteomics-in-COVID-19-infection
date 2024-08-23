@@ -18,7 +18,7 @@ library(devtools)
 #check rownames of target and colnames of matrix
 all(rownames(TargetPN) == colnames(PNFDRQC)) 
 
-library("DESeq2")
+#PCA
 dds <- DESeqDataSetFromMatrix(countData = PNFDRQC,
                               colData = TargetPN,
                               design = ~ Disease)

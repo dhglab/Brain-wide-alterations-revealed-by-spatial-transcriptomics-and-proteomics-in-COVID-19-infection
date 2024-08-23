@@ -20,7 +20,9 @@ all(rownames(TargetFrontalWM) == colnames(FrontalWMQC))
 
 WMFDR01 <- subset(WMDEG, WMDEG$`Adjusted pvalue` < 0.1)
 WMFDR01QC <- subset(FrontalWMQC, rownames(FrontalWMQC) %in% WMFDR01$`Target name`)
+save(WMFDR01QC, TargetFrontalWM, file="FrontalWM.rda")
 
+#PCA
 dds <- DESeqDataSetFromMatrix(countData = WMFDR01QC,
                               colData = TargetFrontalWM,
                               design = ~ Disease)
@@ -54,6 +56,8 @@ biplot(pca, x = 'PC1', y = 'PC2',
        title = "Frontal White Matter")
 dev.off()
 
+
+#Supplementary Figure 1A and 1B
 tiff("FrontalWM5+6_correlate.tiff", units="in", width= 6, height=3.5, res=300)
 eigencorplot(pca,
              components = getComponents(pca, 1:5),

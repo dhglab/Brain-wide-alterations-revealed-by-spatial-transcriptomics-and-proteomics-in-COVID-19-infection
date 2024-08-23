@@ -10,18 +10,20 @@ library(PCAtools)
 library('DESeq2')
 library(devtools)
 
-#Load raw(QC_remove non integer) and Q3 normalized counts, targets, and differential expression from GeoDSP profiler, FrontalGMQC, DEG_GreyMatter_5_6,TargetFrontalGM
+#Load raw(QC_remove non integer), targets, and differential expression from GeoDSP profiler, FrontalGMQC, DEG_GreyMatter_5_6,TargetFrontalGM
 
 #Get FC > 0.3 and <- 0.3 and FDR < 0.1 for PCA plotting
 FrontalGMFDR01 <- subset(DEG_GreyMatter_5_6, DEG_GreyMatter_5_6$`Adjusted pvalue` < 0.1)
 FrontalGMFDR01_03 <- subset(FrontalGMFDR01, FrontalGMFDR01$Log2FC < -0.3)
 FrontalGMFDR0103 <- subset(FrontalGMFDR01, FrontalGMFDR01$Log2FC > 0.3)
-FrontalGMFDR0103 <- rbind(FrontalGMFDR0103,FrontalGMFDR01_03)
-FrontalGMFDRQC <- subset(FrontalGMQC, rownames(FrontalGMQC) %in% FrontalGMFDR0103$`Target name`)
+FrontalGMFDR <- rbind(FrontalGMFDR0103,FrontalGMFDR01_03)
+FrontalGMFDRQC <- subset(FrontalGMQC, rownames(FrontalGMQC) %in% FrontalGMFDR$`Target name`)
+save(FrontalGMFDRQC, TargetFrontalGM, file = "FrontalGM.rda")
 
 #check rownames of target and colnames of matrix
 all(rownames(TargetFrontalGM) == colnames(FrontalGMFDRQC)) 
 
+#PCA
 dds <- DESeqDataSetFromMatrix(countData = FrontalGMFDRQC,
                               colData = TargetFrontalGM,
                               design = ~ Disease)
