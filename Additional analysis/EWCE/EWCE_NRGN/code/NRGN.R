@@ -18,7 +18,7 @@ avg_method="SizeBiased"
 markers=ctd
 
 test = YangNRGNL2$...1
-level=2 # <- ie. Use level 1 annotations (i.e. Interneurons)
+level=2 
 reps=100000
 
 EWCE_enrichment <- EWCE_contingency <- matrix(NA,nrow=dim(ctd[[level]]$specificity)[2],ncol=1)
@@ -49,7 +49,7 @@ avg_method="SizeBiased"
 markers=ctd
 
 test = YangNRGNL2$...1
-level=2 # <- ie. Use level 1 annotations (i.e. Interneurons)
+level=2 
 reps=100000
 
 EWCE_enrichment <- EWCE_contingency <- matrix(NA,nrow=dim(ctd[[level]]$specificity)[2],ncol=1)
@@ -75,7 +75,7 @@ NRGN_WamsleyL2_cell$FDR <- p.adjust(NRGN_WamsleyL2_cell$p, method = "fdr")
 save(NRGN_WamsleyL2_cell, file="NRGN_WamsleyL2_cell.Rdata")
 ###################################################################################################
 test = YangNRGNL1$...1
-level=1 # <- ie. Use level 1 annotations (i.e. Interneurons)
+level=1 
 reps=100000
 
 EWCE_enrichment <- EWCE_contingency <- matrix(NA,nrow=dim(ctd[[level]]$specificity)[2],ncol=1)
