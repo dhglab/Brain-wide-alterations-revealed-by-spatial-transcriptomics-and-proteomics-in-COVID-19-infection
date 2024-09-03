@@ -21,6 +21,7 @@ seurat_obj <- RunEnrichr(
 enrich_df <- GetEnrichrTable(seurat_obj)
 save(enrich_df, file="enrich_df_Ex.rda")
 
+library(Seurat)
 # enrichr dotplot, Extended Figure 4E
 pdf("Enrich_ExNeuN.pdf", height=6, width=7.5)
 EnrichrDotPlot(
