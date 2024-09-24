@@ -10,7 +10,7 @@ library(PCAtools)
 library('DESeq2')
 library(devtools)
 
-#Load raw(QC_remove non integer), targets, and differential expression from GeoDSP profiler, FrontalGMQC, DEG_GreyMatter_5_6,TargetFrontalGM
+#Load counts(QC_remove non integer), targets, and differential expression from GeoDSP profiler, FrontalGMQC, DEG_GreyMatter_5_6,TargetFrontalGM
 
 #Get FC > 0.3 and <- 0.3 and FDR < 0.1 for PCA plotting
 FrontalGMFDR01 <- subset(DEG_GreyMatter_5_6, DEG_GreyMatter_5_6$`Adjusted pvalue` < 0.1)
@@ -29,7 +29,7 @@ dds <- DESeqDataSetFromMatrix(countData = FrontalGMFDRQC,
                               design = ~ Disease)
 dds
 
-vsd <- vst(dds, blind=TRUE)
+vsd <- varianceStabilizingTransformation(dds, blind=TRUE)
 boxplot(assay(vsd), las=2, main="vsd")
 plotPCA(vsd, intgroup = c("Disease"))
 
