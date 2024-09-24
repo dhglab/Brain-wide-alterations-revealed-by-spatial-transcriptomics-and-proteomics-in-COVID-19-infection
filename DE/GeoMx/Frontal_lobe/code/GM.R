@@ -29,7 +29,7 @@ dds <- DESeqDataSetFromMatrix(countData = FrontalGMFDRQC,
                               design = ~ Disease)
 dds
 
-vsd <- varianceStabilizingTransformation(dds, blind=TRUE)
+vsd <- vst(dds, blind=TRUE)
 boxplot(assay(vsd), las=2, main="vsd")
 plotPCA(vsd, intgroup = c("Disease"))
 
