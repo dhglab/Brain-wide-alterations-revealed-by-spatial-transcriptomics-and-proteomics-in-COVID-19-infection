@@ -41,7 +41,7 @@ nCounter_up <-full_results$results
 nCounter_up$Trend = c("up")
 nCounter_up$FDR <- p.adjust(nCounter_up$p, method = "fdr")
 nCounter_up_p <- filter(nCounter_up, FDR<0.05)
-nCounter_up_p$abundance <- abs(nCounter_up_p$sd_from_mean)
+
 save (nCounter_up, nCounter_up_p, file="nCounter_up_celltype_leveL2.Rdata")
 #########################################################################
 test_vec = nCounter_down_R$Gene
@@ -74,7 +74,7 @@ nCounter_down <-full_results$results
 nCounter_down$Trend = c("down")
 nCounter_down$FDR <- p.adjust(nCounter_down$p, method = "fdr")
 nCounter_down_p <- filter(nCounter_down, FDR<0.05)
-nCounter_down_p$abundance <- -abs(nCounter_down_p$sd_from_mean)
+
 save (nCounter_down, nCounter_down_p, file="nCounter_down_celltype_leveL2.Rdata")
 
 nCounter_brie_L2 <- rbind(nCounter_down_p, nCounter_up_p)

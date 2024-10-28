@@ -40,7 +40,6 @@ Frontal_merge2_clean <- Frontal_merge2 %>%
 
 #Pearson's product-moment correlation
 GMnCounterPearson<-cor.test(Frontal_merge2_clean$Mlog2FC,Frontal_merge2_clean$log2FoldChange, method = "pearson") 
-
 #GeneOverlap
 go.obj_GMnCounter <- newGeneOverlap(FDRGM0_1$`Target name`,FDRnCounter0_1$Gene,genome.size = 18676)
 go.obj_GMnCounter <-testGeneOverlap(go.obj_GMnCounter )
