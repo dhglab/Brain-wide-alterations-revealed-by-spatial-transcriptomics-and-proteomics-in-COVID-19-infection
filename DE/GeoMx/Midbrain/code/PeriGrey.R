@@ -2,6 +2,7 @@ library(dplyr)
 library(ggplot2)
 library(EDASeq)
 library(RColorBrewer)
+library(RUVSeq)
 library(Hmisc)
 library(corrplot)
 library(matrixStats)
@@ -9,13 +10,16 @@ library(clusterProfiler)
 library(WGCNA)
 library(Biobase)
 library(PCAtools)
+library('DESeq2')
 library(devtools)
 library(parallel)
 library(abind)
 library(progress)
 library(lme4)
-library(factoextra)
-library(FactoMineR)
+library(Matrix)
+library(PCAtools)
+library(ggfortify)
+
 
 options(stringsAsFactors = FALSE);
 enableWGCNAThreads()
@@ -53,6 +57,22 @@ print(colnames(PeriQ3)[outliers])
 ####outliers 0
 
 #####linear regression#######
+getTopPCs <- function(x, n, col_name="") {
+  scaled_dat <- x
+  prcomp_dat <- prcomp(scaled_dat,center=F);
+  topPCs <- prcomp_dat$rotation[,1:n];
+  varexp <- (prcomp_dat$sdev)^2 / sum(prcomp_dat$sdev^2)
+  topvar <- varexp[1:n]
+  colnames(topPCs) <- paste0(col_name, "\n", colnames(topPCs)," (",signif(100*topvar[1:n],2),"%)")
+  return(topPCs)
+}
+
+Target_PeriSeq <- subset(TargetMid_Seq, subset = rownames(TargetMid_Seq) %in% rownames(target_Peri))
+
+seqPCs <- data.frame(getTopPCs(t(scale(Target_PeriSeq)), 5))
+colnames(seqPCs) <- paste0("seqpc", 1:5)
+seqnames <- colnames(seqPCs)
+target_Peri <- cbind(target_Peri, seqPCs)
 
 target_Peri$Gender <- as.factor(target_Peri$Gender) 
 target_Peri$Gender <- as.numeric(target_Peri$Gender)
@@ -90,6 +110,12 @@ save(PeriQ3_regLog, PeriQ3, target_Peri, Target_PeriSeq, Coefficentlist, file = 
 stopCluster(cl)
 
 #PCA
+library("factoextra")
+library("FactoMineR")
+library(forcats)
+
+target_Peri$Disease <- fct_relevel(target_Peri$Disease, "Ctrl")
+
 pca_res <- PCA(PeriQ3_regLog, graph = FALSE)
 eig.val <- get_eigenvalue(pca_res)
 fviz_eig(pca_res, addlabels = TRUE, ylim = c(0, 50))
@@ -99,17 +125,18 @@ fviz_pca_ind(pca_res ,
              col.ind = target_Peri$Disease, # color by groups
              palette = c("royalblue1", "coral"),
              addEllipses = TRUE, # Concentration ellipses
-             legend.title = "Groups"
+             legend.title = "Groups",
+             title = "PeriGM",
 )
 dev.off()
 
-##Proceed to DREAM##
+##############Proceed to DREAM###################
 library(BioPeriarallel)
 library(variancePartition)
 library(ggfortify)
 library(dplyr)
 
-target_Peri$Disease <- fct_relevel(target_Peri$Disease, "Ctrl")#correct level#
+target_Peri$Disease <- fct_relevel(target_Peri$Disease, "Ctrl")
 
 form2 <- ~ Disease + (1|ScanID)
 fit2 = dream(t(PeriQ3_regLog), form2,target_Peri)

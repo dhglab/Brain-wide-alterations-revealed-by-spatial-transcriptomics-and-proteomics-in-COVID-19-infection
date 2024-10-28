@@ -17,6 +17,8 @@ library(abind)
 library(progress)
 library(lme4)
 library(Matrix)
+library(PCAtools)
+library(ggfortify)
 
 options(stringsAsFactors = FALSE);
 enableWGCNAThreads()
@@ -92,6 +94,12 @@ save(CPQ3_regLog, CPQ3, target_CP, Target_CPSeq, Coefficentlist, file = "CPlinea
 stopCluster(cl)
 
 #PCA
+library("factoextra")
+library("FactoMineR")
+library(forcats)
+
+target_CP$Disease <- fct_relevel(target_CP$Disease, "Ctrl")#correct level#
+
 pca_res <- PCA(CPQ3_regLog, graph = FALSE)
 eig.val <- get_eigenvalue(pca_res)
 fviz_eig(pca_res, addlabels = TRUE, ylim = c(0, 50))
@@ -101,7 +109,8 @@ fviz_pca_ind(pca_res ,
              col.ind = target_CP$Disease, # color by groups
              palette = c("royalblue1", "coral"),
              addEllipses = TRUE, # Concentration ellipses
-             legend.title = "Groups"
+             legend.title = "Groups",
+             title = "CP",
 )
 dev.off()
 

@@ -2,18 +2,23 @@ library(dplyr)
 library(ggplot2)
 library(EDASeq)
 library(RColorBrewer)
+library(RUVSeq)
 library(Hmisc)
 library(corrplot)
 library(matrixStats)
 library(clusterProfiler)
 library(WGCNA)
+library(Biobase)
 library(PCAtools)
+library('DESeq2')
 library(devtools)
 library(parallel)
+library(abind)
 library(progress)
 library(lme4)
-library(factoextra)
-library(FactoMineR)
+library(Matrix)
+library(PCAtools)
+library(ggfortify)
 
 options(stringsAsFactors = FALSE);
 enableWGCNAThreads()
@@ -108,10 +113,16 @@ SNQ3_reg_lot <- (SNQ3Exprlog_t - Lot_effect - Age_effect - PMI_effect - Ventilat
 stopCluster(cl)
 
 #PCA
+library("factoextra")
+library("FactoMineR")
+library(forcats)
+
+target_SN$Disease <- fct_relevel(target_SN$Disease, "Ctrl")#correct level#
+
 pca_res <- PCA(SNQ3_reg_lot, graph = FALSE)
 eig.val <- get_eigenvalue(pca_res)
 fviz_eig(pca_res, addlabels = TRUE, ylim = c(0, 50))
-pdf("SNQ3_PCA.pdf", width=4, height=5)
+pdf("SNQ3_PCA.pdf", width=5, height=4)
 fviz_pca_ind(pca_res ,
              geom.ind = "point", # show points only
              col.ind = target_SN$Disease, # color by groups
@@ -122,7 +133,7 @@ fviz_pca_ind(pca_res ,
 )
 dev.off()
 
-##Proceed to DREAM##
+##############Proceed to DREAM###################
 library(variancePartition)
 library(ggfortify)
 library(dplyr)
@@ -132,7 +143,7 @@ target_SN$Disease <- fct_relevel(target_SN$Disease, "Ctrl")
 form2 <- ~ Disease + (1|ScanID)
 fit2 = dream(t(SNQ3_reg_lot), form2,target_SN)
 fit2 = eBayes(fit2)
-limma_SN_reglog_lot2<- topTable(fit1, coef = NULL, number = 18677, genelist = fit2$genes,  adjust.method = "BH", sort.by = "p",resort.by = NULL,  p.value = 1, lfc = 0, confint = FALSE)
+limma_SN_reglog_lot2<- topTable(fit2, coef = NULL, number = 18677, genelist = fit2$genes,  adjust.method = "BH", sort.by = "p",resort.by = NULL,  p.value = 1, lfc = 0, confint = FALSE)
 
 limma_SN_reglog_lot2$MlogFC <- -limma_SN_reglog_lot2$logFC
 limma_SN_reglog_lot2$Mlog10adjpvalue <- -log10(limma_SN_reglog_lot2$adj.P.Val)

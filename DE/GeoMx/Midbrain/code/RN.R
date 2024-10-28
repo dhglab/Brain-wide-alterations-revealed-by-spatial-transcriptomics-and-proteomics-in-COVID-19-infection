@@ -2,6 +2,7 @@ library(dplyr)
 library(ggplot2)
 library(EDASeq)
 library(RColorBrewer)
+library(RUVSeq)
 library(Hmisc)
 library(corrplot)
 library(matrixStats)
@@ -9,13 +10,15 @@ library(clusterProfiler)
 library(WGCNA)
 library(Biobase)
 library(PCAtools)
+library('DESeq2')
 library(devtools)
 library(parallel)
 library(abind)
 library(progress)
 library(lme4)
-library(factoextra)
-library(FactoMineR)
+library(Matrix)
+library(PCAtools)
+library(ggfortify)
 
 options(stringsAsFactors = FALSE);
 enableWGCNAThreads()
@@ -116,6 +119,12 @@ save(RNQ3_regLog_lot, seqPCs, seqnames, RNQ3_after, target_RN, Target_RNSeq, Coe
 stopCluster(cl)
 
 #PCA
+library("factoextra")
+library("FactoMineR")
+library(forcats)
+
+target_RN$Disease <- fct_relevel(target_RN$Disease, "Ctrl")
+
 pca_res <- PCA(RNQ3_regLog_lot, graph = FALSE)
 eig.val <- get_eigenvalue(pca_res)
 fviz_eig(pca_res, addlabels = TRUE, ylim = c(0, 50))
@@ -125,17 +134,18 @@ fviz_pca_ind(pca_res ,
              col.ind = target_RN$Disease, # color by groups
              palette = c("royalblue1", "coral"),
              addEllipses = TRUE, # Concentration ellipses
-             legend.title = "Groups"
+             legend.title = "Groups",
+             title = "Red Nucleus",
 )
 dev.off()
 
-####Proceed to DREAM###
+##############Proceed to DREAM###################
 library(BiocParallel)
 library(variancePartition)
 library(ggfortify)
 library(dplyr)
 
-target_RN$Disease <- fct_relevel(target_RN$Disease, "Ctrl")#correct level#
+target_RN$Disease <- fct_relevel(target_RN$Disease, "Ctrl")
 
 form2 <- ~ Disease + (1|ScanID)
 fit2 = dream(t(RNQ3_regLog_lot), form2,target_RN)

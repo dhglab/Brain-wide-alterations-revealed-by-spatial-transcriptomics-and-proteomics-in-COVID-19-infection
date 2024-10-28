@@ -56,8 +56,6 @@ biplot(pca, x = 'PC1', y = 'PC2',
        title = "Frontal White Matter")
 dev.off()
 
-
-#Supplementary Figure 1A and 1B
 tiff("FrontalWM5+6_correlate.tiff", units="in", width= 6, height=3.5, res=300)
 eigencorplot(pca,
              components = getComponents(pca, 1:5),

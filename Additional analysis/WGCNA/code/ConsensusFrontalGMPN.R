@@ -292,6 +292,6 @@ Res_filtered_grey_Pc$Area <- c("PontineNuclei")
 
 save(Res_filtered_Pc,Res_filtered_grey_Pc, lm_results_Pc, ME_names_Pc, New_Pc, file = "DifferentialPNmodules_Concensus.RData")
 
-write.csv(Res_Fc,Res_Pc, file = "FrontalGMPN_consensusmodules_DE(lm).csv")
+write.csv(Res_Fc,Res_Pc, file = "FrontalGMPN_consensusmodules_DE_lm.csv")
 
 
