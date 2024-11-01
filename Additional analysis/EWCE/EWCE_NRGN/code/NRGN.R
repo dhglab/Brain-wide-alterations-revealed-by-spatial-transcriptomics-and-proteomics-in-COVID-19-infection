@@ -17,7 +17,7 @@ avg_method="SizeBiased"
 
 markers=ctd
 
-test = YangNRGNL2$...1
+test = YangNRGNL2$Gene
 level=2 
 reps=100000
 
@@ -48,7 +48,7 @@ avg_method="SizeBiased"
 
 markers=ctd
 
-test = YangNRGNL2$...1
+test = YangNRGNL2$Gene
 level=2 
 reps=100000
 
@@ -74,7 +74,7 @@ NRGN_WamsleyL2_cell$area <- c("WamsleyL2")
 NRGN_WamsleyL2_cell$FDR <- p.adjust(NRGN_WamsleyL2_cell$p, method = "fdr")
 save(NRGN_WamsleyL2_cell, file="NRGN_WamsleyL2_cell.Rdata")
 ###################################################################################################
-test = YangNRGNL1$...1
+test = YangNRGNL1$Gene
 level=1 
 reps=100000
 

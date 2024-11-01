@@ -55,6 +55,7 @@ seurat_obj <- ScaleData(
 
 saveRDS(seurat_obj, "seurat_obj_scaleregress.rds")
 
+#set assay with scaledata
 seurat_obj <- seurat_obj_scaleregress
 scaledata <- GetAssayData(object = seurat_obj, slot = "scale.data")
 dim(scaledata)
@@ -168,6 +169,18 @@ head(hub_df)
 
 saveRDS(seurat_obj, file='hdWGCNA_Scaledata_Excitatory_neuron.rds')
 ############################################################################################
+# network and visualization packages
+library(Seurat)
+library(tidyverse)
+library(cowplot)
+library(patchwork)
+library(WGCNA)
+library(hdWGCNA)
+library(igraph)
+theme_set(theme_cowplot())
+
+# set random seed for reproducibility
+set.seed(12345)
 
 # compute gene scoring for the top 25 hub genes by kME for each module
 # with Seurat method
@@ -318,7 +331,7 @@ seurat_obj <- ResetModuleNames(
 MEs <- GetMEs(seurat_obj, harmonized=FALSE)
 mods <- colnames(MEs); mods <- mods[mods != 'grey']
 
-New <- seurat_obj@meta.data[,c(1:46)] 
+New <- seurat_obj@meta.data[1:46]
 New <- cbind(New, MEs)
 ME_names <- colnames(MEs)
 
@@ -327,7 +340,7 @@ unique(New$Disease)
 
 New$Disease <- fct_relevel(New$Disease, "Non-viral")
 
-Expr <- as.matrix(New[, grep("ME", colnames(New))])
+Expr <- as.matrix(MEs)
 
 New$nNuclei <- scale(as.numeric(New$nNuclei))
 New$nFeature_RNA <- scale(as.numeric(New$nFeature_RNA))
@@ -371,9 +384,12 @@ Res<-rbind(Res, Res_2)
 Res_2<-as.data.frame(coefficients(summary(lm_results[[10]])))
 Res_2<- Res_2[!(row.names(Res_2) %in% c("(Intercept)")),]
 Res<-rbind(Res, Res_2)
+Res_2<-as.data.frame(coefficients(summary(lm_results[[11]])))
+Res_2<- Res_2[!(row.names(Res_2) %in% c("(Intercept)")),]
+Res<-rbind(Res, Res_2)
 
 colnames(Res)<- c("Beta","Std","tvalue","pvalue")
-Res$ME<- mods
+Res$ME<- ME_names
 
 library(dplyr)
 Res$fdr <- p.adjust(Res$pvalue, method = "fdr")
@@ -385,12 +401,13 @@ ModulekME <- seurat_obj@misc$COVID_sc$wgcna_modules
 write.csv(ModulekME, file="hdWGCNA_Excitatory_modules_kME.csv")
 
 #Plot M3 module celltype
-MEs <- GetMEs(seurat_obj, harmonized=TRUE)
+MEs <- GetMEs(seurat_obj, harmonized=FALSE)
 mods <- colnames(MEs); mods <- mods[mods != 'grey']
+seurat_obj@meta.data <- cbind(seurat_obj@meta.data, MEs)
 
 p <- VlnPlot(
   seurat_obj,
-  features = 'ME3',
+  features = 'ExNeuN3',
   group.by = 'cellID',
   pt.size = 0 # don't show actual data points
 )
@@ -399,7 +416,7 @@ p <- VlnPlot(
 p <- p + geom_boxplot(width=.25, fill='white')
 
 # change axis labels and remove legend:
-p <- p + xlab('') + ylab('hME') + NoLegend()
+p <- p + xlab('') + ylab('ME') + NoLegend()
 
 # plot output
 pdf("Scale_Excitatory_M3_celltype.pdf", height=4.5, width=5)

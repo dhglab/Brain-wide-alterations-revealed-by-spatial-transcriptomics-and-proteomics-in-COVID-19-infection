@@ -1,4 +1,3 @@
-
 library(Seurat)
 library(tidyverse)
 library(cowplot)
@@ -8,6 +7,7 @@ library(sctransform)
 library(WGCNA)
 library(hdWGCNA)
 library(dplyr)
+
 set.seed(12345)
 enableWGCNAThreads()
 
@@ -253,8 +253,6 @@ ggplot(umap_df, aes(x=UMAP1, y=UMAP2)) +
 dev.off()
 
 #####################Differential module eigengene (DME) analysis#############
-seurat_obj <- hdWGCNA_Scaledata_NRGN_neuron
-
 # get hMEs from seurat object
 seurat_obj <- ResetModuleNames(
   seurat_obj,
@@ -263,10 +261,8 @@ seurat_obj <- ResetModuleNames(
 
 MEs <- GetMEs(seurat_obj, harmonized=FALSE)
 mods <- colnames(MEs); mods <- mods[mods != 'grey']
-seurat_obj <- hdWGCNA_Scaledata_Excitatory_neuron_module
 
-New <- seurat_obj@meta.data
-New <- seurat_obj@meta.data[,c(1:35)] 
+New <- seurat_obj@meta.data[1:35]
 New <- cbind(New, MEs)
 ME_names <- colnames(MEs)
 
@@ -274,7 +270,7 @@ unique(New$Disease)
 
 New$Disease <- fct_relevel(New$Disease, "Non-viral")
 
-Expr <- as.matrix(New[, grep("ME", colnames(New))])
+Expr <- as.matrix(MEs)
 
 New$nNuclei <- scale(as.numeric(New$nNuclei))
 New$nFeature_RNA <- scale(as.numeric(New$nFeature_RNA))
@@ -341,9 +337,12 @@ Res<-rbind(Res, Res_2)
 Res_2<-as.data.frame(coefficients(summary(lm_results[[18]])))
 Res_2<- Res_2[!(row.names(Res_2) %in% c("(Intercept)")),]
 Res<-rbind(Res, Res_2)
+Res_2<-as.data.frame(coefficients(summary(lm_results[[19]])))
+Res_2<- Res_2[!(row.names(Res_2) %in% c("(Intercept)")),]
+Res<-rbind(Res, Res_2)
 
 colnames(Res)<- c("Beta","Std","tvalue","pvalue")
-Res$ME<- mods
+Res$ME<- ME_names
 
 library(dplyr)
 Res$fdr <- p.adjust(Res$pvalue, method = "fdr")
@@ -353,9 +352,6 @@ write.csv(Res, file="Res_linearmodelNRGNmodules.csv")
 
 sc_NRGN_modules_kM <- seurat_obj@misc$COVID_sc$wgcna_modules
 write.csv(sc_NRGN_modules_kM, file="sc_NRGN_modules_kM.csv")
-
-seurat_obj <- ScaleData(seurat_obj, features=VariableFeatures(seurat_obj))
-saveRDS(seurat_obj, file='hdWGCNA_Scaledata_NRGN_neuron_module_2.rds')
 
 library(enrichR)
 library(GeneOverlap)

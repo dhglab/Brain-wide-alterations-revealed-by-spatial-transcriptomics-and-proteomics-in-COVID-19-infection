@@ -50,7 +50,7 @@ seurat_obj <- ProjectModules(
   group.by.vars = "Batch",
   seurat_ref = NULL,
   wgcna_name = "None",
-  wgcna_name_proj = 'concensusFrontalGMPN'
+  wgcna_name_proj = 'consensusFrontalGMPN'
 )
 
 saveRDS(seurat_obj, file = 'consensusFrontalGMPN_projected.rds')
